@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:habito_flutter/di/app_binding.dart';
 import 'package:habito_flutter/hive/models/habit/habit.dart';
+import 'package:habito_flutter/middlewares/prevent_back_middleware.dart';
 import 'package:habito_flutter/screens/create_habit_screen.dart';
 import 'package:habito_flutter/screens/home_screen/home_screen.dart';
 import 'package:habito_flutter/screens/splash_screen.dart';
@@ -34,23 +35,24 @@ class MainApp extends StatelessWidget {
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case homeRoute:
-            return MaterialPageRoute(builder: (context) => const HomeScreen());
+            return GetPageRoute(
+              routeName: settings.name,
+              page: () => const HomeScreen(),
+            );
           case createHabitRoute:
             final habit = settings.arguments as Habit?;
-            return MaterialPageRoute(
-              builder: (context) => CreateHabitScreen(habit: habit),
+            return GetPageRoute(
+              routeName: settings.name,
+              page: () => CreateHabitScreen(habit: habit),
+              middlewares: [CustomBindingMiddleware()],
             );
           default:
-            return MaterialPageRoute(
-              builder: (context) => const SplashScreen(),
+            return GetPageRoute(
+              routeName: settings.name,
+              page: () => const SplashScreen(),
             );
         }
       },
-      // getPages: [
-      //   GetPage(name: '/', page: () => const SplashScreen()),
-      //   GetPage(name: homeRoute, page: () => const HomeScreen()),
-      //   GetPage(name: createHabitRoute, page: () => CreateHabitScreen()),
-      // ],
     );
   }
 }

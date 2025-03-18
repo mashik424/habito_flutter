@@ -3,6 +3,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:habito_flutter/controllers/habits_controller.dart';
+import 'package:habito_flutter/di/empty_binding.dart';
 import 'package:habito_flutter/hive/models/habit/habit.dart';
 
 const String createHabitRoute = '/create-habit';
@@ -35,6 +36,8 @@ class _CreateHabitScreenState extends State<CreateHabitScreen> {
     } else {
       _controllers = [TextEditingController(), TextEditingController()];
     }
+
+    Get.find<SomeClass>().someMethod();
 
     super.initState();
   }
